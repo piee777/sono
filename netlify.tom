@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist" # or "build" if using Create React App
+
+# Handle client-side routing (important for React Router / Vue Router)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
