@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A personal AI companion",
   "scripts": {
-    "build": "echo 'No build step required for frontend'"
+    "build": "mkdir dist && cp -r components services utils App.tsx index.html index.tsx metadata.json pages.tsx types.ts dist"
   },
   "dependencies": {
     "@google/genai": "^1.12.0",
