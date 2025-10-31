@@ -1,19 +1,8 @@
-# Netlify configuration file
-
 [build]
-  # This command runs during the build process. 
-  # It can be empty if you have no build step for your frontend.
   command = "npm run build"
-  
-  # The directory that contains your built site files.
-  # For this project, it's the root directory.
   publish = "."
-  
-  # The directory where your serverless functions are located.
   functions = "netlify/functions"
 
-# This rule rewrites requests from your frontend to the Netlify function.
-# It makes it so a request to "/api/gemini" is handled by the "gemini.ts" function.
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
