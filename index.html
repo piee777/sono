@@ -2,14 +2,12 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Soundous's Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" src="https://cdn.jsdelivr.net/npm/lucide-react/dist/esm/lucide-react.js"></script>
     <style>
       @keyframes gradient-animation {
         0% { background-position: 0% 50%; }
@@ -54,36 +52,52 @@
         animation: gradient-animation 15s ease infinite;
         position: relative;
         overflow-x: hidden;
+        width: 100%;
+        min-height: 100vh;
       }
-      
-      .app-bg::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 150%;
-        padding-top: 150%;
-        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 40%);
-        animation: glow-animation 20s linear infinite;
-        transform-origin: center;
+
+      .app-container {
+        max-width: 100vw;
+        overflow-x: hidden;
       }
 
       .ui-card {
         background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-radius: 24px;
-        padding: 1.5rem; /* 24px */
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         border: 1px solid var(--card-border);
-        animation: fade-in-up 0.6s ease-out forwards;
-        opacity: 0;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 1.25rem;
       }
 
+      .primary-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: var(--primary-accent);
+        color: white;
+        font-weight: 600;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 15px rgba(169, 123, 255, 0.3);
+      }
+      .primary-button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(169, 123, 255, 0.4);
+      }
+      .primary-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      
       .animate-fade-in-up {
         animation: fade-in-up 0.6s ease-out forwards;
-        opacity: 0;
       }
+
       .animate-delay-100 { animation-delay: 100ms; }
       .animate-delay-200 { animation-delay: 200ms; }
       .animate-delay-300 { animation-delay: 300ms; }
@@ -91,56 +105,23 @@
       .animate-delay-500 { animation-delay: 500ms; }
       .animate-delay-600 { animation-delay: 600ms; }
       .animate-delay-700 { animation-delay: 700ms; }
-      .animate-delay-800 { animation-delay: 800ms; }
-
-      .primary-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem; /* 12px */
-        width: 100%;
-        padding: 0.85rem 1rem;
-        background-color: var(--primary-accent);
-        color: white;
-        border-radius: 16px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(169, 123, 255, 0.3);
-      }
-
-      .primary-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(169, 123, 255, 0.5);
-      }
-      
-      .primary-button:active {
-        transform: translateY(0px) scale(0.98);
-        box-shadow: 0 2px 10px rgba(169, 123, 255, 0.4);
-      }
-
-      .primary-button:disabled {
-        opacity: 0.5;
-        transform: none;
-        box-shadow: none;
-        cursor: not-allowed;
-       }
     </style>
   <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.1.1/",
-    "react": "https://esm.sh/react@^19.1.1",
-    "@google/genai": "https://esm.sh/@google/genai@^1.12.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.417.0",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.44.4",
-    "@netlify/functions": "https://aistudiocdn.com/@netlify/functions@^5.0.1"
+    "@netlify/functions": "https://aistudiocdn.com/@netlify/functions@^5.0.1",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.552.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.78.0"
   }
 }
 </script>
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script defer src="index.js"></script>
   </body>
 </html>
