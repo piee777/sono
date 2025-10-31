@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A personal AI companion",
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && cp index.html dist/ && esbuild index.tsx --bundle --outfile=dist/index.js --platform=browser --define:process.env.NODE_ENV='\"production\"'"
+    "build": "rm -rf dist && mkdir dist && cp index.html dist/ && esbuild index.tsx --bundle --outfile=dist/index.js --platform=browser --define:process.env.NODE_ENV='\"production\"' --define:process.env.SUPABASE_URL='\"$SUPABASE_URL\"' --define:process.env.SUPABASE_KEY='\"$SUPABASE_KEY\"'"
   },
   "dependencies": {
     "@google/genai": "^1.12.0",
