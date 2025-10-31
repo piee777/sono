@@ -7,7 +7,7 @@
   
   # The directory that contains your built site files.
   # For this project, it's the root directory.
-  publish = "."
+  publish = "dist"
   
   # The directory where your serverless functions are located.
   functions = "netlify/functions"
@@ -18,3 +18,4 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
