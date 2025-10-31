@@ -1,0 +1,18 @@
+# Netlify Build and Redirect Configuration
+
+[build]
+  # This command runs your build script from package.json
+  command = "npm run build"
+  
+  # This is the directory that gets deployed. Your build script creates it.
+  publish = "dist"
+  
+  # This is where your serverless functions are located.
+  functions = "netlify/functions"
+
+# This rule makes sure that when your app calls "/api/gemini",
+# it gets correctly routed to your gemini.ts function.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
