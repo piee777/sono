@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Navigation from './components/Navigation';
 import { HomePage, ChatPage, AddNotePage, MemoriesPage, SummaryPage } from './pages';
-import type { Chat } from "@google/genai";
 import type { ChatMessage } from './types';
-import { createChatSession } from './services/geminiService';
+import { getChatResponse } from './services/geminiService';
 import { deleteAllUserData, getChatMessages, saveChatMessage } from './utils/journal';
 import { handleApiError } from './utils/error';
 import { supabase } from './services/supabaseClient';
@@ -45,11 +44,8 @@ const App: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
-  const chatSessionRef = useRef<Chat | null>(null);
 
   useEffect(() => {
-    chatSessionRef.current = createChatSession();
-
     const fetchHistory = async () => {
         try {
             const history = await getChatMessages();
@@ -75,19 +71,20 @@ const App: React.FC = () => {
   }, []);
 
   const sendMessage = async (text: string) => {
-    if (isChatLoading || !text.trim() || !chatSessionRef.current) return;
+    if (isChatLoading || !text.trim()) return;
 
     const userMessage: ChatMessage = { id: `user-${Date.now()}`, sender: 'user', text };
+    const currentMessages = [...messages];
     setMessages(prev => [...prev, userMessage]);
     setIsChatLoading(true);
 
     try {
       await saveChatMessage({ sender: 'user', text });
 
-      const response = await chatSessionRef.current.sendMessage({ message: text });
-      const aiMessage: ChatMessage = { id: `ai-${Date.now()}`, sender: 'ai', text: response.text };
+      const aiResponseText = await getChatResponse(currentMessages, text);
+      const aiMessage: ChatMessage = { id: `ai-${Date.now()}`, sender: 'ai', text: aiResponseText };
       setMessages(prev => [...prev, aiMessage]);
-      await saveChatMessage({ sender: 'ai', text: response.text });
+      await saveChatMessage({ sender: 'ai', text: aiResponseText });
 
     } catch (error) {
       const errorMessage = handleApiError(error);
@@ -102,7 +99,6 @@ const App: React.FC = () => {
         await deleteAllUserData();
         
         // Reset chat state
-        chatSessionRef.current = createChatSession();
         const initialMessageText = "hey soundous 👋 how u doin today?";
         const initialMessage: ChatMessage = { id: `ai-init-${Date.now()}`, sender: 'ai', text: initialMessageText };
         setMessages([initialMessage]);
