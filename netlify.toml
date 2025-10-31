@@ -1,0 +1,18 @@
+# Netlify configuration for your application
+
+[build]
+  # This command is defined in your package.json and builds the site.
+  command = "npm run build"
+  
+  # The directory that contains the built site to be deployed.
+  publish = "dist"
+  
+  # The directory where your serverless functions are located.
+  functions = "netlify/functions"
+
+# This rule rewrites requests from your frontend (e.g., /api/gemini)
+# to the correct Netlify function on the backend.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
